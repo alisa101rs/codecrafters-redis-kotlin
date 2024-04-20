@@ -1,0 +1,143 @@
+config:
+  validation: true
+  warningsAsErrors: true
+
+complexity:
+  TooManyFunctions:
+    ignorePrivate: true
+    ignoreOverridden: true
+    thresholdInFiles: 20
+
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+  RedundantSuspendModifier:
+    active: true
+
+empty-blocks:
+  EmptyFunctionBlock:
+    ignoreOverridden: true
+
+exceptions:
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+    methodNames: [ toString, hashCode, equals, finalize ]
+  PrintStackTrace:
+    active: true
+
+formatting:
+  ImportOrdering:
+    active: true
+    autoCorrect: true
+  Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  MaximumLineLength:
+    active: false # Already done by style.MaxLineLength - not necessary
+  MultiLineIfElse:
+    active: false
+  TrailingCommaOnCallSite:
+    active: true
+    autoCorrect: true
+    useTrailingCommaOnCallSite: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+    autoCorrect: true
+    useTrailingCommaOnDeclarationSite: true
+  Filename:
+    active: false
+
+naming:
+  ForbiddenClassName:
+    active: true
+    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
+    forbiddenName:
+      - Bean
+      - Helper
+      - Manager
+      - Util
+
+potential-bugs:
+  UnnecessaryNotNullOperator:
+    active: true
+  UnsafeCast:
+    active: true
+
+
+style:
+  CollapsibleIfStatements:
+    active: true
+  DataClassShouldBeImmutable:
+    # You are allowed to suppress this rule for classes that implement the Fluent Builder pattern.
+    active: true
+  EqualsOnSignatureLine:
+    active: true
+  ExpressionBodySyntax:
+    active: true
+    includeLineWrapping: true
+  ForbiddenComment:
+    active: false
+  ForbiddenMethodCall:
+    active: true
+    methods:
+      # Avoid static/constructor/object mocks
+      - io.mockk.mockkConstructor
+      - io.mockk.mockkStatic
+      - io.mockk.mockkObject
+  ForbiddenImport:
+    active: true
+    imports:
+      # Only allowed when we must use it for code that receives java.util.Date
+      - java.util.Date
+      # Using StringBuffer is rarely a good idea
+      - java.lang.StringBuffer
+      # Ban apache commons. There's very little reason to use it nowadays.
+      - org.apache.commons.*
+      # Avoid using PowerMock - Use dependency injection to ensure your classes never require mocking static methods, final classes, etc.
+      - org.powermock.*
+      # Same for mockk: Avoid static/constructor/object mocks
+      - io.mockk.mockkConstructor
+      - io.mockk.mockkStatic
+      - io.mockk.mockkObject
+  MagicNumber:
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignoreNumbers: [ '-1', '0', '1', '2', '3', '4', '8', '16', '6379' ]
+  NoTabs:
+    active: true
+  ObjectLiteralToLambda:
+    active: true
+  RedundantHigherOrderMapUsage:
+    active: true
+  RedundantVisibilityModifierRule:
+    active: false
+  ReturnCount:
+    max: 7
+  TrailingWhitespace:
+    active: true
+  ThrowsCount:
+    active: true
+    max: 5
+  LoopWithTooManyJumpStatements:
+    active: true
+    maxJumpCount: 3
+  UnnecessaryAbstractClass:
+    active: true
+  UnnecessaryFilter:
+    active: true
+  UseCheckOrError:
+    active: true
+  UseIfEmptyOrIfBlank:
+    active: true
+  UseIsNullOrEmpty:
+    active: true
+  UseOrEmpty:
+    active: true
+  UseRequire:
+    active: true
+  UseRequireNotNull:
+    active: true
+  VarCouldBeVal:
+    active: true
