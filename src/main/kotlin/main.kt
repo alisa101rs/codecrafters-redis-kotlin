@@ -5,6 +5,7 @@ import io.ktor.network.sockets.SocketAddress
 import io.ktor.network.sockets.aSocket
 import io.ktor.network.sockets.tcpNoDelay
 import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.SendChannel
@@ -132,7 +133,7 @@ private suspend fun handshake(
     connection.ping()
     connection.replConf(
         listeningPort = myPort,
-        capabilities = listOf("eof", "psync2"),
+        capabilities = listOf("psync2"),
     )
     connection.startPsync()
 
@@ -144,7 +145,7 @@ private fun CoroutineScope.serve(
     router: Router,
 ) {
     val connection = ClientConnection(rawConnection)
-    val commands = connection.commands(coroutineContext)
+    val commands = connection.commands(coroutineContext + CoroutineName("commands#${connection.remoteAddress}"))
 
     launch {
         for (raw in commands) {

@@ -20,7 +20,7 @@ public class MasterConnection(raw: Socket) : Connection(raw) {
 }
 
 public suspend fun MasterConnection.receiveSimpleResponse(): String =
-    receive<Resp2.String>().value
+    receive<Resp2.String>().value.also { println("Received simple response $it") }
 
 private suspend fun MasterConnection.send(command: List<String>): String {
     sendCommand(command)
@@ -44,9 +44,9 @@ public suspend fun MasterConnection.replConf(
             add(cap)
         }
     }
-    send(caps)
+    val capsResponse = send(caps)
 
-    println("sent replconf")
+    println("sent replconf: $capsResponse")
 }
 
 public suspend fun MasterConnection.startPsync() {
